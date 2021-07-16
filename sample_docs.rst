@@ -10,7 +10,7 @@ Access Controls Framework
     :depth: 2
     :local:
 
-User Access Control involved multiple perspectives to evaluate if a business role has privileges to perform certain business activity or not. Even if the activity is allowed, there may be further restrictions based on level of authority, functional area or other restrictions.
+User Access Control involves multiple perspectives to evaluate if a business role has privileges to perform certain business activity or not. Even if the activity is allowed, there may be further restrictions based on level of authority, functional area or other restrictions.
 
 The following criteria are key elements of Authorization Control Matrix:
 
