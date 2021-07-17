@@ -1240,97 +1240,13 @@ Each such step is represented by an transaction step in the system. This may be:
 
 .. seealso:: See also :ref:`bpmr` for analysing and identifying business processes and activities for business process modeling and re-engineering.
 
-Action Controls
--------------------------------------------------------------------------------
-
-Any business activity involves few basic actions, commonly called CRUD actions:
-
-- C: create a new record
-- R: retrieve a saved record
-- U: update an existing record
-- D: delete an existing record
-
-All business roles may not have privileges to perform all of above actions in an activity. In order to restrict users to perform only permitted actions, these actions are mapped in activities. When an application step (e.g., form or screen) is created for a business activity (e.g., creating a purchase order), user privileges are evaluated for possible actions and only permissible actions are exposed.
-
-This may be achieved using either of two methods:
-
-#. Adopt application step based on actions allowed for a user role. In this case, the same form or screen need to adopted for:
-
-   - create mode for new data entry
-   - retrieve mode for search and display existing record in read only format
-   - update mode for search and display existing record in editable format
-   - delete mode for search and delete existing record
-   - additional modes such as print, release, activate, deactivate based on business scenarios.
-
-#. Create separate steps in the application to perform the activity in limited mode:
-
-   - create transaction for new data entry
-   - retrieve transaction for search and display existing record in read only format
-   - update transaction for search and display existing record in editable format
-   - delete transaction for search and delete existing record
-   - additional transactions such as print, release, activate, deactivate based on business scenarios.
-
-Both approaches are equally effective; the difference is relevant from implementation and maintenance perspective. In first approach (single transaction with authorization matrix for actions) simplify application step from users perspective as there is only one application step. Application takes care of permissible mode based on authorization matrix. In this approach, the complexities shifts on technical implementation of implementation model. In second approach, the implementation is simple as one application step just need to focus only on one permissible action - CRU or D. In both cases, authorization matrix is same.
-
-Normally a consistent approach should be followed for designing access control for `activities` and `actions` across the application. If an application is designed for use in different organizations and industries, only one of above approach may not be adequate for all implementations. In this case, albeit more complex but a hybrid approach may be adopted:
-
-- All business `activity` is mapped to an application step (screen or form accessible from a menu option) with all possible CRUD actions. Access is evaluated at the entry point of the transaction privileges are modified before the data is presented for user `action`.
-- Separate entry points (menu options) are also created for the application step in each CRUD action mode. Sometimes an entirely separate application step may be create for a specific mode such as retrieve and display a purchase order.
-- User `activity` as well as CRUD `actions` are mapped in a user authorization matrix
-- Power users are given access of the `activity` in all `action` modes, while users with limited privileges are given access of the `activity` with limited modes (such as only display of purchase orders).
-- Alternatively, users with limited privileges may be given access for an application step for `activity` that is limited to just one `action` (such as only display of purchase orders).
 
 
-Organization Unit Level Controls
--------------------------------------------------------------------------------
 
-In a large organization, the operations are spread over multiple areas and separate persons may be responsible for these areas. The allocation of roles and responsibilities may be based on various criteria:
 
-- Geographical Locations (different offices, cities, regions and countries)
-- Separate of legal structure (different companies)
-- Functional structure (business units, divisions, departments and cost centers)
-- Logistics structure (warehouses, offices, factories)
-- Team structures (production and maintenance teams, sales and purchase teams)
 
-These structure and parameters are considered in the design of business application. These are incorporated as organization structure elements in relevant business transactions. Different organization structure elements and their mapping into application modules is covered in :ref:`osf`. There are different organization structure elements in different functional areas, such as `company` in financial accounting and `warehouse` in logistics operations.
 
-Organization Unit level controls are implemented with help Organization structure elements. Each organization structure element is used as an access control object. The access control matrix (for organization structure elements) defines which business role has authorization to which all organization units. The application transaction starts with evaluating user roles and authorization matrix. Only if the user has access to an organization unit, next activity or action is allowed.
 
-The combination of `activity` and `organization element` allows application access controls for specific activity in specific organization area.
-
-.. seealso:: See also :ref:`osf` for common organization structure elements and their inter-dependence.
-
-Process Parameters Controls
--------------------------------------------------------------------------------
-
-The business processes have some variations in different scenario. The `terms of payment` in a purchase order is an example. In case of few vendors, purchase orders are issued on credit terms, while for some other vendors, advance payments may be allowed. The `payment term` is a process parameter which is specified by the user while performing the activity. In few business scenarios, all users may not access to handle all business scenarios. This should be handled by using configurable business process parameters and extending authorization checks on these parameter values.
-
-While some parameters are generic which may be adopted for the purpose of this control, some other parameters must be specifically defined and standardized for the purpose of access controls. Document Number Series is one common example, which facilitates division of work and access controls. Different persons may be authorized separate document series for segregation of roles as well as access controls.
-
-Process parameters should be considered in access controls only when it really adds value and controls to the business process and organization structure. As more and mode process parameters are included in access controls, the authorization matrix becomes complex and difficult to maintain and sustain.
-
-Authorization Matrix, Transaction Groups and User Groups
--------------------------------------------------------------------------------
-
-Once application transactions are finalized for each business activities, these should be grouped together in different business roles. Each transaction group may include one or more application transactions that can be assigned to a business role. Predefined transaction groups facilitates maintenance of user access controls. While defining transaction groups, the primary focus should be on business roles and the activities performed in that business role. The organizational positions and designations should be secondary consideration.
-
-Similarly all users should be grouped into user groups, so that users with similar business roles can be considered together for provision of necessary application rights. These grouping may include groups of users with similar functions, or a specific position responsible for a restricted activity. For instance, basic purchasing activities may be included in a `purchaser` role, so that common purchasing tasks can be assigned together to buyers in the organization. Similarly, `purchase order approver` activity may be assigned in a separate transaction group, so that it can be assigned independently of purchasing actions. While defining user groups, the primary considerations should be organizational positions and designations.
-
-When a transaction group is assigned to a user group, all activities under that transaction groups are available to the user group. Some activities may also be assigned directly to a business user. This is frequently applicable for approval and release related activities. The application access controls may include provision of direct assignment of a business transaction to a business user.
-
-Industry Best Practices
--------------------------------------------------------------------------------
-
-- Business Processes should be broken down to Activity level - one independent step that can be performed manually or automated with specified input, processing and output.
-- Each business activity should be mapped to an application transaction. An application transaction may represent a form, report, print, release, interface, or conversion.
-- Each activity should be evaluated for possible actions (create, retrieve and display, update and edit, deletion, print).
-- Organization units should be mapped to organization structure elements.
-- Process parameters should be evaluated with reference to process parameters. Process parameters should be mapped with help of internal or external configurable parameters.
-- Authorization matrix should be prepared for possible combinations of business activities, actions, organization structure elements and process parameters
-- There are two method of designing access controls matrix in the application:
-
-  #. Application Transactions are assigned to Application Users. This is direct assignment of activities to users.
-  #. Application Transactions are grouped together in Transaction Groups. Users are grouped together in User Groups. Transaction Groups are assigned to User Groups. This is indirect assignment of activities to users.
 
 
 
