@@ -1241,15 +1241,6 @@ Each such step is represented by an transaction step in the system. This may be:
 .. seealso:: See also :ref:`bpmr` for analysing and identifying business processes and activities for business process modeling and re-engineering.
 
 
-
-
-
-
-
-
-
-
-
 .. _ccf:
 
 Configuration Controls Framework
@@ -1583,10 +1574,3 @@ We have considered a separate section to compile a comprehensive repository of c
 - implications and impact of configuration,
 - maintenance roles and responsibilities,
 - integration aspects in different business modules and processes.
-
-
-
-
-
-
-
